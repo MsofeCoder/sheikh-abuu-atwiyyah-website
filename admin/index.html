@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="sw">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Jopo la Uongozi — Sheikh Abuu Atwiyyah Islamic Advisory</title>
+  <link rel="icon" type="image/png" href="../assets/favicon-32.png" />
+  <style>
+    body { font-family: -apple-system, sans-serif; }
+  </style>
+</head>
+<body>
+  <!-- Netlify Identity widget: handles admin login -->
+  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+
+  <!-- Decap CMS (formerly Netlify CMS) — free, git-based admin panel -->
+  <script src="https://unpkg.com/decap-cms@^3.1.0/dist/decap-cms.js"></script>
+
+  <script>
+    if (window.netlifyIdentity) {
+      window.netlifyIdentity.on("init", function (user) {
+        if (!user) {
+          window.netlifyIdentity.on("login", function () {
+            document.location.href = "/admin/";
+          });
+        }
+      });
+    }
+  </script>
+</body>
+</html>

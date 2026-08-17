@@ -1,0 +1,158 @@
+(function () {
+  "use strict";
+
+  var WHATSAPP_NUMBER = "255783040837";
+
+  function waLink(text) {
+    return "https://wa.me/" + WHATSAPP_NUMBER + "?text=" + encodeURIComponent(text);
+  }
+
+  function escapeHtml(str) {
+    var div = document.createElement("div");
+    div.textContent = str == null ? "" : String(str);
+    return div.innerHTML;
+  }
+
+  function fetchJson(path) {
+    return fetch(path, { cache: "no-store" }).then(function (res) {
+      if (!res.ok) throw new Error("Failed to load " + path);
+      return res.json();
+    });
+  }
+
+  var RESOURCE_TAGS = {
+    pdf: "Kitabu cha PDF",
+    makala: "Makala",
+    audio: "Audio",
+    video: "Video",
+  };
+
+  var RESOURCE_CTA = {
+    pdf: { withUrl: "Pakua PDF", withoutUrl: "Omba nakala" },
+    makala: { withUrl: "Soma Makala", withoutUrl: "Omba makala" },
+    audio: { withUrl: "Sikiliza", withoutUrl: "Omba kiungo" },
+    video: { withUrl: "Tazama", withoutUrl: "Omba kiungo" },
+  };
+
+  /* ---------------- Testimonials ---------------- */
+  function renderTestimonials(items) {
+    var track = document.getElementById("testimonial-track");
+    var dotsWrap = document.getElementById("testimonial-dots");
+    if (!track || !dotsWrap || !items || !items.length) return;
+
+    var quoteSvg =
+      '<svg class="quote-mark" viewBox="0 0 40 32" fill="currentColor" aria-hidden="true">' +
+      '<path d="M0 20.3C0 10.1 6.6 2.6 17.4 0l2.3 4.7C13 6.6 9.4 10.8 8.9 16.4c1-.5 2.2-.8 3.6-.8 5 0 8.6 3.6 8.6 8.4 0 5-3.9 8.6-9 8.6C5 32.6 0 27 0 20.3Zm22 0C22 10.1 28.6 2.6 39.4 0l2.3 4.7C35 6.6 31.4 10.8 30.9 16.4c1-.5 2.2-.8 3.6-.8 5 0 8.6 3.6 8.6 8.4 0 5-3.9 8.6-9 8.6-7.1 0-12.1-5.6-12.1-12.3Z"/></svg>';
+
+    track.innerHTML = items
+      .map(function (t, i) {
+        return (
+          '<blockquote class="testimonial-slide" data-active="' + (i === 0) + '">' +
+          quoteSvg +
+          '<p class="font-display text-xl sm:text-2xl text-green-900 leading-relaxed">' + escapeHtml(t.quote) + "</p>" +
+          '<footer class="mt-6 text-sm font-semibold tracking-wide text-ink/60">' +
+          escapeHtml(t.name) + (t.location ? " &middot; " + escapeHtml(t.location) : "") +
+          "</footer></blockquote>"
+        );
+      })
+      .join("");
+
+    dotsWrap.innerHTML = "";
+
+    if (window.SAA && typeof window.SAA.initTestimonialSlider === "function") {
+      window.SAA.initTestimonialSlider();
+    }
+  }
+
+  /* ---------------- Resources ---------------- */
+  function renderResources(items) {
+    var grid = document.getElementById("resource-grid");
+    if (!grid || !items || !items.length) return;
+
+    grid.innerHTML = items
+      .map(function (r) {
+        var tag = RESOURCE_TAGS[r.type] || "Rasilimali";
+        var cta = RESOURCE_CTA[r.type] || RESOURCE_CTA.pdf;
+        var hasUrl = r.url && String(r.url).trim().length > 0;
+        var href = hasUrl ? r.url : waLink("Assalamu Alaykum, ningependa kupata: " + r.title);
+        var label = hasUrl ? cta.withUrl : cta.withoutUrl;
+        var attrs = hasUrl
+          ? 'href="' + escapeHtml(href) + '" target="_blank" rel="noopener"'
+          : 'href="' + escapeHtml(href) + '" target="_blank" rel="noopener"';
+
+        return (
+          '<div class="resource-card reveal in-view">' +
+          '<span class="resource-tag">' + escapeHtml(tag) + "</span>" +
+          '<h3 class="font-display text-lg font-semibold mt-4">' + escapeHtml(r.title) + "</h3>" +
+          '<p class="mt-2 text-sm text-cream/60 leading-relaxed">' + escapeHtml(r.description) + "</p>" +
+          '<a ' + attrs + ' class="resource-link">' + escapeHtml(label) + " &rarr;</a>" +
+          "</div>"
+        );
+      })
+      .join("");
+  }
+
+  /* ---------------- Posters ---------------- */
+  function renderPosters(items) {
+    var grid = document.getElementById("poster-grid");
+    if (!grid || !items || !items.length) return;
+
+    grid.innerHTML = items
+      .map(function (p) {
+        return (
+          '<a href="' + escapeHtml(p.image) + '" target="_blank" rel="noopener" class="poster-card reveal in-view">' +
+          '<img src="' + escapeHtml(p.image) + '" alt="' + escapeHtml(p.caption || "Bango") + '" loading="lazy">' +
+          '<span class="poster-caption">' + escapeHtml(p.caption || "") + "</span>" +
+          "</a>"
+        );
+      })
+      .join("");
+  }
+
+  /* ---------------- Working hours ---------------- */
+  function renderHours(hours) {
+    var wrap = document.getElementById("hours-table");
+    if (!wrap || !hours || !hours.length) return;
+
+    wrap.innerHTML = hours
+      .map(function (h) {
+        return (
+          '<div class="hours-row">' +
+          '<span class="hours-day">' + escapeHtml(h.day) + "</span>" +
+          '<span class="hours-time">' + escapeHtml(h.time) + "</span>" +
+          (h.note ? '<span class="hours-note">' + escapeHtml(h.note) + "</span>" : "") +
+          "</div>"
+        );
+      })
+      .join("");
+  }
+
+  /* ---------------- Boot ---------------- */
+  function boot() {
+    fetchJson("content/testimonials.json")
+      .then(function (data) { renderTestimonials(data.items); })
+      .catch(function () { /* keep static fallback already in HTML */ });
+
+    fetchJson("content/resources.json")
+      .then(function (data) { renderResources(data.items); })
+      .catch(function () { /* keep static fallback already in HTML */ });
+
+    fetchJson("content/posters.json")
+      .then(function (data) { renderPosters(data.items); })
+      .catch(function () { /* keep static fallback already in HTML */ });
+
+    fetchJson("content/settings.json")
+      .then(function (data) { renderHours(data.hours); })
+      .catch(function () { /* keep static fallback already in HTML */ });
+
+    if (window.SAA && typeof window.SAA.initCalendar === "function") {
+      window.SAA.initCalendar();
+    }
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", boot);
+  } else {
+    boot();
+  }
+})();

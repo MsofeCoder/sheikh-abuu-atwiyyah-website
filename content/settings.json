@@ -1,0 +1,10 @@
+{
+  "hours": [
+    { "day": "Jumatatu – Alhamisi", "time": "9:00 Asubuhi – 6:00 Jioni", "note": "" },
+    { "day": "Ijumaa", "time": "9:00 – 12:00 Mchana  •  2:30 – 6:00 Jioni", "note": "Mapumziko ya Swala ya Ijumaa: 12:00 – 2:30" },
+    { "day": "Jumamosi", "time": "9:00 Asubuhi – 2:00 Mchana", "note": "" },
+    { "day": "Jumapili", "time": "Tumefungwa", "note": "Dharura pekee kupitia WhatsApp" }
+  ],
+  "weeklyOff": [0],
+  "note": "Muda wa Afrika Mashariki (EAT). weeklyOff: 0=Jumapili ... 6=Jumamosi, hutumika kuzima siku hizo kwenye kalenda."
+}

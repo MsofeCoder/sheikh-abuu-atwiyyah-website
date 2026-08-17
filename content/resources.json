@@ -1,0 +1,22 @@
+{
+  "items": [
+    {
+      "type": "pdf",
+      "title": "Haki za Mke na Mume Katika Uislamu",
+      "description": "Muhtasari mfupi wa haki na wajibu wa wanandoa kwa mujibu wa Qur'an na Sunnah.",
+      "url": ""
+    },
+    {
+      "type": "makala",
+      "title": "Hatua Tano za Maandalizi ya Ndoa",
+      "description": "Mwongozo wa vitendo kwa wachumba wanaotaka kuanza safari ya ndoa kwa msingi thabiti.",
+      "url": ""
+    },
+    {
+      "type": "audio",
+      "title": "Darsa: Amani Ndani ya Nyumba",
+      "description": "Mhadhara kuhusu jinsi ya kudumisha upendo na uvumilivu katika maisha ya ndoa.",
+      "url": ""
+    }
+  ]
+}

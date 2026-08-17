@@ -1,0 +1,121 @@
+backend:
+  name: git-gateway
+  branch: main
+
+# Where uploaded images/PDFs are stored in the repo, and the public
+# path used to reference them on the live site.
+media_folder: "assets/uploads"
+public_folder: "/assets/uploads"
+
+locale: "en"
+
+collections:
+
+  - name: "testimonials"
+    label: "Ushuhuda (Testimonials)"
+    files:
+      - file: "content/testimonials.json"
+        label: "Orodha ya Ushuhuda"
+        name: "testimonials"
+        fields:
+          - label: "Ushuhuda"
+            name: "items"
+            widget: "list"
+            summary: "{{fields.name}} — {{fields.location}}"
+            fields:
+              - { label: "Nukuu", name: "quote", widget: "text" }
+              - { label: "Jina la Mteja", name: "name", widget: "string" }
+              - { label: "Mahali", name: "location", widget: "string" }
+
+  - name: "resources"
+    label: "Rasilimali (Vitabu, Makala, Audio/Video)"
+    files:
+      - file: "content/resources.json"
+        label: "Orodha ya Rasilimali"
+        name: "resources"
+        fields:
+          - label: "Rasilimali"
+            name: "items"
+            widget: "list"
+            summary: "{{fields.type}} — {{fields.title}}"
+            fields:
+              - label: "Aina"
+                name: "type"
+                widget: "select"
+                options:
+                  - { label: "Kitabu cha PDF", value: "pdf" }
+                  - { label: "Makala", value: "makala" }
+                  - { label: "Audio", value: "audio" }
+                  - { label: "Video", value: "video" }
+              - { label: "Kichwa", name: "title", widget: "string" }
+              - { label: "Maelezo Mafupi", name: "description", widget: "text" }
+              - label: "Faili la PDF au Kiungo cha Audio/Video (hiari)"
+                name: "url"
+                widget: "file"
+                required: false
+                hint: "Ukiacha wazi, kitufe kitaomba nakala kupitia WhatsApp badala yake."
+
+  - name: "posters"
+    label: "Mabango (Posters)"
+    files:
+      - file: "content/posters.json"
+        label: "Orodha ya Mabango"
+        name: "posters"
+        fields:
+          - label: "Mabango"
+            name: "items"
+            widget: "list"
+            summary: "{{fields.caption}}"
+            fields:
+              - { label: "Picha ya Bango", name: "image", widget: "image" }
+              - { label: "Maelezo/Kichwa", name: "caption", widget: "string" }
+
+  - name: "bookings"
+    label: "Kalenda ya Miadi (Booking Calendar)"
+    files:
+      - file: "content/bookings.json"
+        label: "Tarehe Zilizojaa"
+        name: "bookings"
+        fields:
+          - label: "Tarehe Zilizojaa (zitaonyesha alama ya kufuli)"
+            name: "booked"
+            widget: "list"
+            summary: "{{fields.date}}"
+            fields:
+              - label: "Tarehe"
+                name: "date"
+                widget: "datetime"
+                date_format: "YYYY-MM-DD"
+                time_format: false
+                format: "YYYY-MM-DD"
+              - { label: "Kumbukumbu (hiari)", name: "note", widget: "string", required: false }
+
+  - name: "settings"
+    label: "Mipangilio ya Tovuti (Masaa ya Kazi)"
+    files:
+      - file: "content/settings.json"
+        label: "Masaa ya Kazi"
+        name: "settings"
+        fields:
+          - label: "Masaa ya Kazi"
+            name: "hours"
+            widget: "list"
+            summary: "{{fields.day}} — {{fields.time}}"
+            fields:
+              - { label: "Siku", name: "day", widget: "string" }
+              - { label: "Muda", name: "time", widget: "string" }
+              - { label: "Maelezo (hiari)", name: "note", widget: "string", required: false }
+          - label: "Siku za Wiki Zilizofungwa"
+            name: "weeklyOff"
+            widget: "select"
+            multiple: true
+            hint: "Siku hizi hazitaweza kubofywa kwenye kalenda ya miadi."
+            options:
+              - { label: "Jumapili", value: 0 }
+              - { label: "Jumatatu", value: 1 }
+              - { label: "Jumanne", value: 2 }
+              - { label: "Jumatano", value: 3 }
+              - { label: "Alhamisi", value: 4 }
+              - { label: "Ijumaa", value: 5 }
+              - { label: "Jumamosi", value: 6 }
+          - { label: "Kumbukumbu", name: "note", widget: "text", required: false }

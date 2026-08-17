@@ -1,0 +1,19 @@
+{
+  "items": [
+    {
+      "quote": "Tulipata mwongozo wa dhati kabla ya kufunga ndoa. Mambo mengi tuliyokuwa hatujawahi kuzungumza, tuliyapitia kwa utulivu na uwazi. Tumeanza ndoa yetu kwa kujiamini zaidi.",
+      "name": "Amina & Rashid S.",
+      "location": "Dar es Salaam"
+    },
+    {
+      "quote": "Ushauri wa Sheikh ulitusaidia kurejesha maelewano nyumbani wakati wa kipindi kigumu. Alitusikiliza wote wawili kwa uvumilivu na kutupa hekima ya kweli, si maneno matupu.",
+      "name": "Fatuma H.",
+      "location": "Mwanza"
+    },
+    {
+      "quote": "Darsa za malezi ya watoto zilinifungua macho kuhusu jinsi ya kuwafunza watoto wangu adabu kwa upole. Nashukuru sana kwa muda na uvumilivu wa Sheikh.",
+      "name": "Juma M.",
+      "location": "Zanzibar"
+    }
+  ]
+}
