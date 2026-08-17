@@ -1,7 +1,7 @@
 (function () {
   "use strict";
 
-  var WHATSAPP_NUMBER = "255783040837";
+  var WHATSAPP_NUMBER = (window.SAA && window.SAA.WHATSAPP_NUMBER) || "255783040837";
 
   function waLink(text) {
     return "https://wa.me/" + WHATSAPP_NUMBER + "?text=" + encodeURIComponent(text);
@@ -14,7 +14,7 @@
   }
 
   function fetchJson(path) {
-    return fetch(path, { cache: "no-store" }).then(function (res) {
+    return fetch(path).then(function (res) {
       if (!res.ok) throw new Error("Failed to load " + path);
       return res.json();
     });
@@ -76,16 +76,13 @@
         var hasUrl = r.url && String(r.url).trim().length > 0;
         var href = hasUrl ? r.url : waLink("Assalamu Alaykum, ningependa kupata: " + r.title);
         var label = hasUrl ? cta.withUrl : cta.withoutUrl;
-        var attrs = hasUrl
-          ? 'href="' + escapeHtml(href) + '" target="_blank" rel="noopener"'
-          : 'href="' + escapeHtml(href) + '" target="_blank" rel="noopener"';
 
         return (
           '<div class="resource-card reveal in-view">' +
           '<span class="resource-tag">' + escapeHtml(tag) + "</span>" +
           '<h3 class="font-display text-lg font-semibold mt-4">' + escapeHtml(r.title) + "</h3>" +
           '<p class="mt-2 text-sm text-cream/60 leading-relaxed">' + escapeHtml(r.description) + "</p>" +
-          '<a ' + attrs + ' class="resource-link">' + escapeHtml(label) + " &rarr;</a>" +
+          '<a href="' + escapeHtml(href) + '" target="_blank" rel="noopener" class="resource-link">' + escapeHtml(label) + " &rarr;</a>" +
           "</div>"
         );
       })
@@ -99,10 +96,12 @@
 
     grid.innerHTML = items
       .map(function (p) {
+        var src = (p.thumb && String(p.thumb).trim()) ? p.thumb : p.image;
+        var caption = p.caption || "Bango";
         return (
           '<a href="' + escapeHtml(p.image) + '" target="_blank" rel="noopener" class="poster-card reveal in-view">' +
-          '<img src="' + escapeHtml(p.image) + '" alt="' + escapeHtml(p.caption || "Bango") + '" loading="lazy">' +
-          '<span class="poster-caption">' + escapeHtml(p.caption || "") + "</span>" +
+          '<img src="' + escapeHtml(src) + '" alt="' + escapeHtml(caption) + '" loading="lazy" decoding="async" width="720">' +
+          '<span class="poster-caption">' + escapeHtml(caption) + "</span>" +
           "</a>"
         );
       })
@@ -127,6 +126,41 @@
       .join("");
   }
 
+  /* ---------------- Time slots ---------------- */
+  function renderSlots(slots) {
+    var group = document.getElementById("slot-group");
+    var input = document.getElementById("pref-time");
+    if (!group) return;
+
+    var list = (Array.isArray(slots) && slots.length) ? slots : null;
+    if (!list) {
+      group.innerHTML = "";
+      if (input) input.value = "";
+      return;
+    }
+
+    group.innerHTML = list
+      .map(function (t) { return '<button type="button" class="slot-btn" data-time="' + escapeHtml(t) + '" aria-pressed="false">' + escapeHtml(t) + "</button>"; })
+      .join("");
+
+    group.querySelectorAll(".slot-btn").forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        var wasSelected = btn.classList.contains("selected");
+        group.querySelectorAll(".slot-btn.selected").forEach(function (b) {
+          b.classList.remove("selected");
+          b.setAttribute("aria-pressed", "false");
+        });
+        if (!wasSelected) {
+          btn.classList.add("selected");
+          btn.setAttribute("aria-pressed", "true");
+          if (input) input.value = btn.getAttribute("data-time");
+        } else if (input) {
+          input.value = "";
+        }
+      });
+    });
+  }
+
   /* ---------------- Boot ---------------- */
   function boot() {
     fetchJson("content/testimonials.json")
@@ -142,7 +176,10 @@
       .catch(function () { /* keep static fallback already in HTML */ });
 
     fetchJson("content/settings.json")
-      .then(function (data) { renderHours(data.hours); })
+      .then(function (data) {
+        renderHours(data.hours);
+        renderSlots(data.slots);
+      })
       .catch(function () { /* keep static fallback already in HTML */ });
 
     if (window.SAA && typeof window.SAA.initCalendar === "function") {

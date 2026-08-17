@@ -67,7 +67,8 @@ collections:
             widget: "list"
             summary: "{{fields.caption}}"
             fields:
-              - { label: "Picha ya Bango", name: "image", widget: "image" }
+              - { label: "Picha ya Bango (kwa ukubwa kamili)", name: "image", widget: "image" }
+              - { label: "Picha ya Kidogo/Thumbnail ya WebP (hiari)", name: "thumb", widget: "image", required: false }
               - { label: "Maelezo/Kichwa", name: "caption", widget: "string" }
 
   - name: "bookings"
@@ -118,4 +119,8 @@ collections:
               - { label: "Alhamisi", value: 4 }
               - { label: "Ijumaa", value: 5 }
               - { label: "Jumamosi", value: 6 }
+          - label: "Muda wa Vikao (Time slots)"
+            name: "slots"
+            widget: "list"
+            hint: "Muda huu unaonyeshwa kwenye fomu ya miadi baada ya kuchagua tarehe. Kila kipengele ni muda mmoja, mfano: 9:00 – 10:00"
           - { label: "Kumbukumbu", name: "note", widget: "text", required: false }

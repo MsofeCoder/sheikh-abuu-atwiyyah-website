@@ -51,7 +51,7 @@
   }
 
   function fetchJson(path) {
-    return fetch(path, { cache: "no-store" }).then(function (res) {
+    return fetch(path).then(function (res) {
       if (!res.ok) throw new Error("Failed to load " + path);
       return res.json();
     });
@@ -194,6 +194,45 @@
     if (next) next.addEventListener("click", function () { shiftMonth(1); });
   }
 
+  /* Arrow-key navigation for the grid (roving focus within the month) */
+  function isoToDate(iso) {
+    var parts = iso.split("-").map(Number);
+    return new Date(parts[0], parts[1] - 1, parts[2]);
+  }
+
+  function wireGridKeys() {
+    var grid = document.getElementById("calendar-grid");
+    if (!grid) return;
+
+    grid.addEventListener("keydown", function (e) {
+      var active = document.activeElement;
+      if (!active || !active.classList || !active.classList.contains("cal-cell")) return;
+      var dateAttr = active.getAttribute("data-date");
+      if (!dateAttr) return;
+
+      var d = isoToDate(dateAttr);
+      var first = new Date(state.year, state.month, 1);
+      var last = new Date(state.year, state.month + 1, 0);
+      var target = null;
+
+      switch (e.key) {
+        case "ArrowLeft": target = new Date(d); target.setDate(d.getDate() - 1); break;
+        case "ArrowRight": target = new Date(d); target.setDate(d.getDate() + 1); break;
+        case "ArrowUp": target = new Date(d); target.setDate(d.getDate() - 7); break;
+        case "ArrowDown": target = new Date(d); target.setDate(d.getDate() + 7); break;
+        case "Home": target = new Date(first); break;
+        case "End": target = new Date(last); break;
+        default: return;
+      }
+
+      if (target < first || target > last) return;
+      e.preventDefault();
+      var iso = toISODate(target.getFullYear(), target.getMonth(), target.getDate());
+      var btn = grid.querySelector('.cal-cell[data-date="' + iso + '"]');
+      if (btn) btn.focus();
+    });
+  }
+
   window.SAA.initCalendar = function () {
     if (state.initialized) return;
     state.initialized = true;
@@ -203,6 +242,7 @@
     state.month = now.getMonth();
 
     wireNav();
+    wireGridKeys();
     loadData().then(render).catch(render);
   };
 })();
