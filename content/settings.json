@@ -6,6 +6,11 @@
     { "day": "Jumapili", "time": "Tumefungwa", "note": "Dharura pekee kupitia WhatsApp" }
   ],
   "slots": ["9:00 – 10:00", "10:30 – 11:30", "14:00 – 15:00", "15:30 – 16:30", "17:00 – 18:00"],
+  "slotByDay": [
+    { "weekday": 5, "slots": ["9:00 – 10:00", "10:30 – 11:30", "14:30 – 15:30", "16:00 – 17:00"] },
+    { "weekday": 6, "slots": ["9:00 – 10:00", "10:30 – 11:30", "12:00 – 13:00"] }
+  ],
+  "dateSlots": [],
   "weeklyOff": [0],
   "photo": "assets/placeholder-sheikh.svg",
   "credentials": [
@@ -13,5 +18,5 @@
     { "value": "200+", "label": "Familia zilizosaidiwa" },
     { "value": "100%", "label": "Ushauri wa faragha" }
   ],
-  "note": "Muda wa Afrika Mashariki (EAT). weeklyOff: 0=Jumapili ... 6=Jumamosi, hutumika kuzima siku hizo kwenye kalenda. slots: muda wa vikao unaoonyeshwa kwenye fomu ya miadi. photo: picha ya Sheikh (SVG/WebP/PNG). credentials: takwimu/kadi za uaminifu zinazoonyeshwa chini ya picha."
+  "note": "Muda wa Afrika Mashariki (EAT). weeklyOff: 0=Jumapili ... 6=Jumamosi, hutumika kuzima siku hizo kwenye kalenda. slots: muda wa vikao unaoonyeshwa kwenye fomu ya miadi (default). slotByDay: orodha ya siku maalum (weekday 0-6) zilizo na muda tofauti — hutumika kuchuja muda kwenye fomu baada ya kuchagua tarehe. dateSlots: orodha ya tarehe maalum (YYYY-MM-DD) zilizo na muda tofauti, hutangulia kuliko slotByDay. photo: picha ya Sheikh (SVG/WebP/PNG). credentials: takwimu/kadi za uaminifu zinazoonyeshwa chini ya picha."
 }

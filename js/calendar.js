@@ -8,7 +8,10 @@
     "Julai", "Agosti", "Septemba", "Oktoba", "Novemba", "Desemba",
   ];
   // Order matches JS getDay(): 0=Jumapili(Sunday) ... 6=Jumamosi(Saturday)
-  var DAY_LABELS_BY_INDEX = ["P", "J2", "J3", "J4", "J5", "Ij", "J1"];
+  var DAY_LABELS_BY_INDEX = ["Jum", "J2", "J3", "J4", "J5", "Ija", "J1"];
+  var DAY_FULL_BY_INDEX = [
+    "Jumapili", "Jumatatu", "Jumanne", "Jumatano", "Alhamisi", "Ijumaa", "Jumamosi",
+  ];
 
   var state = {
     year: null,
@@ -46,6 +49,14 @@
     return (
       '<svg viewBox="0 0 24 24" class="cal-icon" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">' +
       '<path d="M12 3a9 9 0 1 0 9 9c0-.4 0-.8-.06-1.2A6.5 6.5 0 0 1 12 3Z" stroke-linecap="round" stroke-linejoin="round"/>' +
+      "</svg>"
+    );
+  }
+
+  function checkIconSvg() {
+    return (
+      '<svg viewBox="0 0 24 24" class="cal-icon cal-icon--check" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true">' +
+      '<path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round"/>' +
       "</svg>"
     );
   }
@@ -99,8 +110,8 @@
 
     var cells = [];
 
-    var headerHtml = DAY_LABELS_BY_INDEX.map(function (l) {
-      return '<div class="cal-weekday">' + l + "</div>";
+    var headerHtml = DAY_LABELS_BY_INDEX.map(function (l, i) {
+      return '<div class="cal-weekday" role="columnheader" aria-label="' + DAY_FULL_BY_INDEX[i] + '">' + l + "</div>";
     }).join("");
 
     for (var i = 0; i < startWeekday; i++) {
@@ -134,6 +145,7 @@
         disabled = true;
       } else {
         cls.push("cal-cell--available");
+        icon = checkIconSvg();
       }
 
       if (isToday) cls.push("cal-cell--today");
@@ -171,7 +183,10 @@
       btn.addEventListener("click", function () {
         state.selected = btn.getAttribute("data-date");
         var input = document.getElementById("pref-date");
-        if (input) input.value = state.selected;
+        if (input) {
+          input.value = state.selected;
+          input.dispatchEvent(new Event("change", { bubbles: true }));
+        }
         render();
       });
     });

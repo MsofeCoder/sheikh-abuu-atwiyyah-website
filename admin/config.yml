@@ -53,7 +53,7 @@ collections:
                 name: "url"
                 widget: "file"
                 required: false
-                hint: "Ukiacha wazi, kitufe kitaomba nakala kupitia WhatsApp badala yake."
+                hint: "Ukijaza faili, kitufe kitafungua/pakua rasilimali moja kwa moja kwenye kivinjari (PDF kitapakuliwa). Ukiacha wazi, kitufe kitaomba nakala kupitia WhatsApp badala yake. Weka PDF za vitabu katika assets/books/."
 
   - name: "posters"
     label: "Mabango (Posters)"
@@ -123,6 +123,45 @@ collections:
             name: "slots"
             widget: "list"
             hint: "Muda huu unaonyeshwa kwenye fomu ya miadi baada ya kuchagua tarehe. Kila kipengele ni muda mmoja, mfano: 9:00 – 10:00"
+          - label: "Muda wa Vikao kwa Siku Maalum (hiari)"
+            name: "slotByDay"
+            widget: "list"
+            required: false
+            summary: "Siku {{fields.weekday}} — vipindi {{fields.slots.length}}"
+            hint: "Muda tofauti kwa siku fulani za wiki. Huu muda unaonekana kwenye fomu baada ya kuchagua tarehe ya siku hiyo. Hakuna kipengele kwa siku → muda wa kawaida (slots) unatumika."
+            fields:
+              - label: "Siku ya Wiki (0=Jumapili ... 6=Jumamosi)"
+                name: "weekday"
+                widget: "select"
+                options:
+                  - { label: "Jumapili (0)", value: 0 }
+                  - { label: "Jumatatu (1)", value: 1 }
+                  - { label: "Jumanne (2)", value: 2 }
+                  - { label: "Jumatano (3)", value: 3 }
+                  - { label: "Alhamisi (4)", value: 4 }
+                  - { label: "Ijumaa (5)", value: 5 }
+                  - { label: "Jumamosi (6)", value: 6 }
+              - label: "Vipindi vya Muda"
+                name: "slots"
+                widget: "list"
+                hint: "Kila kipengele ni muda mmoja, mfano: 9:00 – 10:00"
+          - label: "Muda wa Vikao kwa Tarehe Maalum (hiari)"
+            name: "dateSlots"
+            widget: "list"
+            required: false
+            summary: "{{fields.date}}"
+            hint: "Muda tofauti kwa tarehe maalum (mfano sherehe au siku ya pekee). Huu muda unatangulia kuliko muda wa siku (slotByDay)."
+            fields:
+              - label: "Tarehe (YYYY-MM-DD)"
+                name: "date"
+                widget: "datetime"
+                date_format: "YYYY-MM-DD"
+                time_format: false
+                format: "YYYY-MM-DD"
+              - label: "Vipindi vya Muda"
+                name: "slots"
+                widget: "list"
+                hint: "Kila kipengele ni muda mmoja, mfano: 9:00 – 10:00"
           - label: "Picha ya Sheikh"
             name: "photo"
             widget: "image"

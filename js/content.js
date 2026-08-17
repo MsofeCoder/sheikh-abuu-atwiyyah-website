@@ -74,15 +74,19 @@
         var tag = RESOURCE_TAGS[r.type] || "Rasilimali";
         var cta = RESOURCE_CTA[r.type] || RESOURCE_CTA.pdf;
         var hasUrl = r.url && String(r.url).trim().length > 0;
+        var isPdf = r.type === "pdf";
         var href = hasUrl ? r.url : waLink("Assalamu Alaykum, ningependa kupata: " + r.title);
         var label = hasUrl ? cta.withUrl : cta.withoutUrl;
+        var linkAttrs =
+          'href="' + escapeHtml(href) + '"' +
+          (hasUrl ? ' target="_blank" rel="noopener"' + (isPdf ? ' download="' + escapeHtml(r.title) + '.pdf"' : "") : ' target="_blank" rel="noopener"');
 
         return (
           '<div class="resource-card reveal in-view">' +
           '<span class="resource-tag">' + escapeHtml(tag) + "</span>" +
           '<h3 class="font-display text-lg font-semibold mt-4">' + escapeHtml(r.title) + "</h3>" +
           '<p class="mt-2 text-sm text-cream/60 leading-relaxed">' + escapeHtml(r.description) + "</p>" +
-          '<a href="' + escapeHtml(href) + '" target="_blank" rel="noopener" class="resource-link">' + escapeHtml(label) + " &rarr;</a>" +
+          '<a ' + linkAttrs + ' class="resource-link">' + escapeHtml(label) + " &rarr;</a>" +
           "</div>"
         );
       })
@@ -136,15 +140,46 @@
       .join("");
   }
 
-  /* ---------------- Time slots ---------------- */
-  function renderSlots(slots) {
+  /* ---------------- Time slots (dynamic per selected date) ---------------- */
+  var settingsCache = null;
+
+  function prefDateValue() {
+    var el = document.getElementById("pref-date");
+    return el ? el.value : "";
+  }
+
+  function slotsForDate(iso, settings) {
+    var defaults = (settings && Array.isArray(settings.slots)) ? settings.slots.slice() : [];
+    if (!iso) return defaults;
+
+    if (settings.dateSlots && Array.isArray(settings.dateSlots)) {
+      for (var i = 0; i < settings.dateSlots.length; i++) {
+        if (settings.dateSlots[i] && settings.dateSlots[i].date === iso) {
+          return (settings.dateSlots[i].slots || []).slice();
+        }
+      }
+    }
+
+    if (settings.slotByDay && Array.isArray(settings.slotByDay)) {
+      var weekday = new Date(iso + "T00:00:00").getDay();
+      for (var j = 0; j < settings.slotByDay.length; j++) {
+        if (settings.slotByDay[j] && Number(settings.slotByDay[j].weekday) === weekday) {
+          return (settings.slotByDay[j].slots || []).slice();
+        }
+      }
+    }
+
+    return defaults;
+  }
+
+  function renderSlots(slots, settings) {
     var group = document.getElementById("slot-group");
     var input = document.getElementById("pref-time");
     if (!group) return;
 
     var list = (Array.isArray(slots) && slots.length) ? slots : null;
     if (!list) {
-      group.innerHTML = "";
+      group.innerHTML = '<p class="slot-empty">Hakuna muda uliopatikana kwa siku hiyo. Tafadhali chagua tarehe nyingine.</p>';
       if (input) input.value = "";
       return;
     }
@@ -169,6 +204,12 @@
         }
       });
     });
+  }
+
+  function updateSlotsForDate(settings) {
+    var input = document.getElementById("pref-date");
+    var iso = input ? input.value : "";
+    renderSlots(slotsForDate(iso, settings), settings);
   }
 
   /* ---------------- About: photo + credentials ---------------- */
@@ -209,9 +250,14 @@
 
     fetchJson("content/settings.json")
       .then(function (data) {
+        settingsCache = data;
         renderHours(data.hours);
-        renderSlots(data.slots);
+        renderSlots(slotsForDate(prefDateValue(), data), data);
         renderAbout(data);
+        var prefDate = document.getElementById("pref-date");
+        if (prefDate) {
+          prefDate.addEventListener("change", function () { updateSlotsForDate(settingsCache); });
+        }
       })
       .catch(function () { /* keep static fallback already in HTML */ });
 
