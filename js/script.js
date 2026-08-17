@@ -55,6 +55,72 @@
     });
   }
 
+  /* ---------------- FAQ accordion (one item open at a time) ---------------- */
+  var faqItems = Array.prototype.slice.call(
+    document.querySelectorAll("#maswali .faq-item")
+  );
+  faqItems.forEach(function (item) {
+    var btn = item.querySelector(".faq-q");
+    if (!btn) return;
+    btn.addEventListener("click", function () {
+      var wasOpen = item.classList.contains("open");
+      faqItems.forEach(function (other) {
+        other.classList.remove("open");
+        var b = other.querySelector(".faq-q");
+        if (b) b.setAttribute("aria-expanded", "false");
+      });
+      if (!wasOpen) {
+        item.classList.add("open");
+        btn.setAttribute("aria-expanded", "true");
+      }
+    });
+  });
+
+  /* ---------------- Scrollspy (desktop nav + mobile menu) ---------------- */
+  function initScrollSpy() {
+    var navLinks = Array.prototype.slice.call(
+      document.querySelectorAll("#site-header .nav-link, #mobile-menu .mobile-link")
+    );
+    if (!navLinks.length) return;
+
+    var byId = {};
+    navLinks.forEach(function (link) {
+      var href = link.getAttribute("href");
+      if (href && href.charAt(0) === "#") {
+        (byId[href.slice(1)] = byId[href.slice(1)] || []).push(link);
+      }
+    });
+
+    var ids = Object.keys(byId);
+    var sections = ids.map(function (id) { return document.getElementById(id); }).filter(Boolean);
+    if (!sections.length) return;
+
+    function setActive(id) {
+      navLinks.forEach(function (link) {
+        link.classList.toggle("active", link.getAttribute("href") === "#" + id);
+      });
+    }
+
+    function onBottom() {
+      if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 2) {
+        setActive(ids[ids.length - 1]);
+      }
+    }
+
+    if ("IntersectionObserver" in window) {
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) setActive(entry.target.id);
+        });
+      }, { rootMargin: "-40% 0px -55% 0px", threshold: 0 });
+      sections.forEach(function (section) { io.observe(section); });
+    }
+
+    window.addEventListener("scroll", onBottom, { passive: true });
+    onBottom();
+  }
+  initScrollSpy();
+
   /* ---------------- Reveal-on-scroll ---------------- */
   function observeReveal(root) {
     var scope = root || document;
@@ -160,6 +226,30 @@
       track.addEventListener("focusout", function () {
         if (!prefersReducedMotion) restart();
       });
+
+      /* Touch swipe support (left/right) — simple delta detection, no library */
+      var touchX = null;
+      var touchY = null;
+      track.addEventListener("touchstart", function (e) {
+        var t = e.changedTouches[0];
+        touchX = t.clientX;
+        touchY = t.clientY;
+        if (testimonialTimer) clearInterval(testimonialTimer);
+      }, { passive: true });
+      track.addEventListener("touchend", function (e) {
+        if (touchX === null) return;
+        var t = e.changedTouches[0];
+        var dx = t.clientX - touchX;
+        var dy = t.clientY - touchY;
+        touchX = null;
+        touchY = null;
+        if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy)) {
+          if (dx < 0) goTo(current + 1); else goTo(current - 1);
+          restart();
+        } else if (!prefersReducedMotion) {
+          restart();
+        }
+      }, { passive: true });
     }
 
     renderState();

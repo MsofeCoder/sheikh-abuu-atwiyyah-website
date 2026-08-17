@@ -90,6 +90,14 @@
   }
 
   /* ---------------- Posters ---------------- */
+  function layoutPosters(grid, count) {
+    var cls = "mt-14 grid gap-6";
+    if (count === 1) cls += " poster-grid--single";
+    else if (count === 2) cls += " poster-grid--two";
+    else cls += " sm:grid-cols-2 lg:grid-cols-4";
+    grid.className = cls;
+  }
+
   function renderPosters(items) {
     var grid = document.getElementById("poster-grid");
     if (!grid || !items || !items.length) return;
@@ -106,6 +114,8 @@
         );
       })
       .join("");
+
+    layoutPosters(grid, items.length);
   }
 
   /* ---------------- Working hours ---------------- */
@@ -161,6 +171,28 @@
     });
   }
 
+  /* ---------------- About: photo + credentials ---------------- */
+  function renderAbout(settings) {
+    var img = document.getElementById("about-photo");
+    if (img && settings && settings.photo && String(settings.photo).trim()) {
+      img.src = settings.photo;
+    }
+
+    var chips = document.getElementById("credential-chips");
+    if (chips && settings && Array.isArray(settings.credentials) && settings.credentials.length) {
+      chips.innerHTML = settings.credentials
+        .map(function (c) {
+          return (
+            '<div class="credential-chip">' +
+            '<b class="chip-value">' + escapeHtml(c.value) + "</b>" +
+            '<span class="chip-label">' + escapeHtml(c.label) + "</span>" +
+            "</div>"
+          );
+        })
+        .join("");
+    }
+  }
+
   /* ---------------- Boot ---------------- */
   function boot() {
     fetchJson("content/testimonials.json")
@@ -179,6 +211,7 @@
       .then(function (data) {
         renderHours(data.hours);
         renderSlots(data.slots);
+        renderAbout(data);
       })
       .catch(function () { /* keep static fallback already in HTML */ });
 

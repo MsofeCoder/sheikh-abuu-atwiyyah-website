@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1000" width="800" height="1000" role="img" aria-label="Picha ya mfano ya Sheikh Abuu Atwiyyah">
+  <defs>
+    <linearGradient id="saabg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0a2818"/>
+      <stop offset="1" stop-color="#123a22"/>
+    </linearGradient>
+    <radialGradient id="saav" cx="0.5" cy="0.4" r="0.8">
+      <stop offset="0.55" stop-color="#0a2818" stop-opacity="0"/>
+      <stop offset="1" stop-color="#04150c" stop-opacity="0.9"/>
+    </radialGradient>
+    <filter id="saablur" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="14"/>
+    </filter>
+  </defs>
+  <rect width="800" height="1000" fill="url(#saabg)"/>
+  <g filter="url(#saablur)">
+    <g fill="none" stroke="#d9b556" stroke-width="5" opacity="0.45">
+      <rect x="220" y="320" width="360" height="360" rx="8"/>
+      <rect x="220" y="320" width="360" height="360" rx="8" transform="rotate(45 400 500)"/>
+    </g>
+    <g fill="none" stroke="#e8cf82" stroke-width="4" opacity="0.35">
+      <circle cx="400" cy="500" r="130"/>
+      <circle cx="400" cy="500" r="235"/>
+      <circle cx="400" cy="500" r="320"/>
+    </g>
+    <g fill="#d9b556" opacity="0.4">
+      <circle cx="400" cy="220" r="12"/>
+      <circle cx="400" cy="780" r="12"/>
+      <circle cx="180" cy="500" r="12"/>
+      <circle cx="620" cy="500" r="12"/>
+    </g>
+    <g fill="#e8cf82" opacity="0.3">
+      <circle cx="235" cy="265" r="8"/>
+      <circle cx="565" cy="265" r="8"/>
+      <circle cx="235" cy="735" r="8"/>
+      <circle cx="565" cy="735" r="8"/>
+    </g>
+  </g>
+  <rect width="800" height="1000" fill="url(#saav)"/>
+</svg>

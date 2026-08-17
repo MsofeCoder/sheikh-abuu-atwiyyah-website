@@ -123,4 +123,16 @@ collections:
             name: "slots"
             widget: "list"
             hint: "Muda huu unaonyeshwa kwenye fomu ya miadi baada ya kuchagua tarehe. Kila kipengele ni muda mmoja, mfano: 9:00 – 10:00"
+          - label: "Picha ya Sheikh"
+            name: "photo"
+            widget: "image"
+            required: false
+            hint: "Weka picha halisi ya Sheikh (SVG/WebP/PNG). Ukiacha wazi, picha ya mfano (muundo wa kijiometri) itatumika."
+          - label: "Takwimu za Uaminifu (credentials)"
+            name: "credentials"
+            widget: "list"
+            summary: "{{fields.value}} — {{fields.label}}"
+            fields:
+              - { label: "Thamani (mfano: 15+)", name: "value", widget: "string" }
+              - { label: "Maelezo (mfano: Miaka ya uzoefu)", name: "label", widget: "string" }
           - { label: "Kumbukumbu", name: "note", widget: "text", required: false }

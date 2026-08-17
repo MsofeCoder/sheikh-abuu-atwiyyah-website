@@ -7,5 +7,11 @@
   ],
   "slots": ["9:00 – 10:00", "10:30 – 11:30", "14:00 – 15:00", "15:30 – 16:30", "17:00 – 18:00"],
   "weeklyOff": [0],
-  "note": "Muda wa Afrika Mashariki (EAT). weeklyOff: 0=Jumapili ... 6=Jumamosi, hutumika kuzima siku hizo kwenye kalenda. slots: muda wa vikao unaoonyeshwa kwenye fomu ya miadi."
+  "photo": "assets/placeholder-sheikh.svg",
+  "credentials": [
+    { "value": "15+", "label": "Miaka ya uzoefu" },
+    { "value": "200+", "label": "Familia zilizosaidiwa" },
+    { "value": "100%", "label": "Ushauri wa faragha" }
+  ],
+  "note": "Muda wa Afrika Mashariki (EAT). weeklyOff: 0=Jumapili ... 6=Jumamosi, hutumika kuzima siku hizo kwenye kalenda. slots: muda wa vikao unaoonyeshwa kwenye fomu ya miadi. photo: picha ya Sheikh (SVG/WebP/PNG). credentials: takwimu/kadi za uaminifu zinazoonyeshwa chini ya picha."
 }

@@ -217,9 +217,18 @@
   <section id="kuhusu" class="relative bg-cream pt-20 pb-8 sm:pt-24">
     <div class="max-w-6xl mx-auto px-6 sm:px-8">
       <div class="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
-        <div class="about-frame reveal max-w-sm lg:max-w-none mx-auto lg:mx-0 w-full">
-          <div class="about-arch" aria-hidden="true"></div>
-          <img src="assets/logo-mark-lg.webp" alt="Nembo ya Sheikh Abuu Atwiyyah Islamic Advisory" class="about-photo" width="224" height="224" loading="lazy" decoding="async">
+        <div class="reveal">
+          <div class="about-frame max-w-sm lg:max-w-none mx-auto lg:mx-0 w-full">
+            <div class="about-arch" aria-hidden="true"></div>
+            <!-- TODO: Badilisha assets/placeholder-sheikh.svg na picha halisi ya Sheikh.
+                 Unaweza pia kuibadilisha bila mabadiliko ya code kupitia /admin → Mipangilio → "Picha ya Sheikh". -->
+            <img id="about-photo" class="about-photo" src="assets/placeholder-sheikh.svg" alt="Sheikh Abuu Atwiyyah" width="800" height="1000" loading="lazy" decoding="async">
+          </div>
+          <div class="credential-chips" id="credential-chips">
+            <div class="credential-chip"><b class="chip-value">15+</b><span class="chip-label">Miaka ya uzoefu</span></div>
+            <div class="credential-chip"><b class="chip-value">200+</b><span class="chip-label">Familia zilizosaidiwa</span></div>
+            <div class="credential-chip"><b class="chip-value">100%</b><span class="chip-label">Ushauri wa faragha</span></div>
+          </div>
         </div>
         <div class="text-center lg:text-left">
           <p class="eyebrow eyebrow-dark reveal">Kuhusu Sheikh</p>
@@ -289,7 +298,7 @@
           <h2 class="mt-3 font-display font-semibold text-2xl sm:text-3xl text-green-800 leading-tight">
             Tunapatikana kwa miadi ndani ya masaa haya
           </h2>
-          <p class="mt-4 text-[15px] text-ink/60 leading-relaxed max-w-xs">
+          <p class="mt-4 text-[15px] text-ink/70 leading-relaxed max-w-xs">
             Kwa mahitaji ya dharura nje ya masaa haya, tuma ujumbe WhatsApp na tutajibu haraka iwezekanavyo.
           </p>
         </div>
@@ -376,12 +385,12 @@
         <h2 class="mt-4 font-display font-semibold text-3xl sm:text-[2.6rem] text-green-800 leading-tight reveal" style="transition-delay:80ms">
           Matangazo na Mabango ya Huduma
         </h2>
-        <p class="mt-5 text-ink/60 text-[17px] leading-relaxed reveal" style="transition-delay:140ms">
+        <p class="mt-5 text-ink/70 text-[17px] leading-relaxed reveal" style="transition-delay:140ms">
           Mabango yanayotumika kwa matangazo ya mitandao ya kijamii na huduma zetu za ushauri.
         </p>
       </div>
 
-      <div id="poster-grid" class="mt-14 grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div id="poster-grid" class="mt-14 grid gap-6 poster-grid--single">
         <a href="assets/posters/poster-1.jpg" target="_blank" rel="noopener" class="poster-card reveal">
           <img src="assets/posters/poster-1.jpg" alt="Je, Unajiandaa Kuingia Katika Ndoa?" loading="lazy">
           <span class="poster-caption">Je, Unajiandaa Kuingia Katika Ndoa?</span>
@@ -402,19 +411,19 @@
           <blockquote class="testimonial-slide" data-active="true">
             <svg class="quote-mark" viewBox="0 0 40 32" fill="currentColor" aria-hidden="true"><path d="M0 20.3C0 10.1 6.6 2.6 17.4 0l2.3 4.7C13 6.6 9.4 10.8 8.9 16.4c1-.5 2.2-.8 3.6-.8 5 0 8.6 3.6 8.6 8.4 0 5-3.9 8.6-9 8.6C5 32.6 0 27 0 20.3Zm22 0C22 10.1 28.6 2.6 39.4 0l2.3 4.7C35 6.6 31.4 10.8 30.9 16.4c1-.5 2.2-.8 3.6-.8 5 0 8.6 3.6 8.6 8.4 0 5-3.9 8.6-9 8.6-7.1 0-12.1-5.6-12.1-12.3Z"/></svg>
             <p class="font-display text-xl sm:text-2xl text-green-900 leading-relaxed">Tulipata mwongozo wa dhati kabla ya kufunga ndoa. Mambo mengi tuliyokuwa hatujawahi kuzungumza, tuliyapitia kwa utulivu na uwazi. Tumeanza ndoa yetu kwa kujiamini zaidi.</p>
-            <footer class="mt-6 text-sm font-semibold tracking-wide text-ink/60">Amina &amp; Rashid S. &middot; Dar es Salaam</footer>
+            <footer class="mt-6 text-sm font-semibold tracking-wide text-ink/70">Amina &amp; Rashid S. &middot; Dar es Salaam</footer>
           </blockquote>
 
           <blockquote class="testimonial-slide" data-active="false">
             <svg class="quote-mark" viewBox="0 0 40 32" fill="currentColor" aria-hidden="true"><path d="M0 20.3C0 10.1 6.6 2.6 17.4 0l2.3 4.7C13 6.6 9.4 10.8 8.9 16.4c1-.5 2.2-.8 3.6-.8 5 0 8.6 3.6 8.6 8.4 0 5-3.9 8.6-9 8.6C5 32.6 0 27 0 20.3Zm22 0C22 10.1 28.6 2.6 39.4 0l2.3 4.7C35 6.6 31.4 10.8 30.9 16.4c1-.5 2.2-.8 3.6-.8 5 0 8.6 3.6 8.6 8.4 0 5-3.9 8.6-9 8.6-7.1 0-12.1-5.6-12.1-12.3Z"/></svg>
             <p class="font-display text-xl sm:text-2xl text-green-900 leading-relaxed">Ushauri wa Sheikh ulitusaidia kurejesha maelewano nyumbani wakati wa kipindi kigumu. Alitusikiliza wote wawili kwa uvumilivu na kutupa hekima ya kweli, si maneno matupu.</p>
-            <footer class="mt-6 text-sm font-semibold tracking-wide text-ink/60">Fatuma H. &middot; Mwanza</footer>
+            <footer class="mt-6 text-sm font-semibold tracking-wide text-ink/70">Fatuma H. &middot; Mwanza</footer>
           </blockquote>
 
           <blockquote class="testimonial-slide" data-active="false">
             <svg class="quote-mark" viewBox="0 0 40 32" fill="currentColor" aria-hidden="true"><path d="M0 20.3C0 10.1 6.6 2.6 17.4 0l2.3 4.7C13 6.6 9.4 10.8 8.9 16.4c1-.5 2.2-.8 3.6-.8 5 0 8.6 3.6 8.6 8.4 0 5-3.9 8.6-9 8.6C5 32.6 0 27 0 20.3Zm22 0C22 10.1 28.6 2.6 39.4 0l2.3 4.7C35 6.6 31.4 10.8 30.9 16.4c1-.5 2.2-.8 3.6-.8 5 0 8.6 3.6 8.6 8.4 0 5-3.9 8.6-9 8.6-7.1 0-12.1-5.6-12.1-12.3Z"/></svg>
             <p class="font-display text-xl sm:text-2xl text-green-900 leading-relaxed">Darsa za malezi ya watoto zilinifungua macho kuhusu jinsi ya kuwafunza watoto wangu adabu kwa upole. Nashukuru sana kwa muda na uvumilivu wa Sheikh.</p>
-            <footer class="mt-6 text-sm font-semibold tracking-wide text-ink/60">Juma M. &middot; Zanzibar</footer>
+            <footer class="mt-6 text-sm font-semibold tracking-wide text-ink/70">Juma M. &middot; Zanzibar</footer>
           </blockquote>
         </div>
 
@@ -429,30 +438,75 @@
       <div class="text-center">
         <p class="eyebrow eyebrow-dark reveal">Maswali</p>
         <h2 class="mt-4 font-display font-semibold text-3xl sm:text-[2.6rem] text-green-800 leading-tight reveal" style="transition-delay:80ms">Maswali Yanayoulizwa Mara kwa Mara</h2>
-        <p class="mt-5 text-ink/60 text-[17px] leading-relaxed reveal" style="transition-delay:140ms">Majibu ya haraka kwa maswali ya kawaida kabla ya kuwasiliana nasi.</p>
+        <p class="mt-5 text-ink/70 text-[17px] leading-relaxed reveal" style="transition-delay:140ms">Majibu ya haraka kwa maswali ya kawaida kabla ya kuwasiliana nasi.</p>
       </div>
 
       <div class="mt-12 reveal" style="transition-delay:200ms">
-        <details class="faq-item">
-          <summary>Huduma hizi zinatolewa namna gani?</summary>
-          <p>Huduma hutolewa kupitia WhatsApp, simu, au kikao cha faragha kwa makubaliano. Baadhi ya vikao vinaweza kufanyika kwa njia ya mtandaoni.</p>
-        </details>
-        <details class="faq-item">
-          <summary>Mazungumzo yangu yatawekwa siri?</summary>
-          <p>Ndiyo. Kila mazungumzo na taarifa unazoshiriki zinashughulikiwa kwa siri na heshima kamili.</p>
-        </details>
-        <details class="faq-item">
-          <summary>Ninawezaje kuweka miadi?</summary>
-          <p>Bofya kitufe cha &ldquo;Weka Miadi Sasa&rdquo; kwenye fomu, au tuma ujumbe kupitia WhatsApp +255 783 040 837 na tutakujibu haraka.</p>
-        </details>
-        <details class="faq-item">
-          <summary>Mafunzo ya kabla ya ndoa yanahusu nini?</summary>
-          <p>Maandalizi ya kina kwa wachumba: haki na wajibu wa wanandoa, matarajio ya maisha ya ndoa, na jinsi ya kuanza safari ya pamoja kwa misingi imara ya Kiislamu.</p>
-        </details>
-        <details class="faq-item">
-          <summary>Ninaweza kupata msaada wa dharura nje ya masaa ya kazi?</summary>
-          <p>Kwa dharura, tuma ujumbe wa WhatsApp na tutajibu haraka iwezekanavyo, hata nje ya masaa ya kazi.</p>
-        </details>
+        <div class="faq-item" id="faq-item-1">
+          <h3 class="faq-heading">
+            <button type="button" class="faq-q" id="faq-btn-1" aria-expanded="false" aria-controls="faq-panel-1">
+              <span>Huduma hizi zinatolewa namna gani?</span>
+              <span class="faq-chevron" aria-hidden="true"></span>
+            </button>
+          </h3>
+          <div class="faq-panel" id="faq-panel-1" role="region" aria-labelledby="faq-btn-1">
+            <div class="faq-panel-inner">
+              <p>Huduma hutolewa kupitia WhatsApp, simu, au kikao cha faragha kwa makubaliano. Baadhi ya vikao vinaweza kufanyika kwa njia ya mtandaoni.</p>
+            </div>
+          </div>
+        </div>
+        <div class="faq-item" id="faq-item-2">
+          <h3 class="faq-heading">
+            <button type="button" class="faq-q" id="faq-btn-2" aria-expanded="false" aria-controls="faq-panel-2">
+              <span>Mazungumzo yangu yatawekwa siri?</span>
+              <span class="faq-chevron" aria-hidden="true"></span>
+            </button>
+          </h3>
+          <div class="faq-panel" id="faq-panel-2" role="region" aria-labelledby="faq-btn-2">
+            <div class="faq-panel-inner">
+              <p>Ndiyo. Kila mazungumzo na taarifa unazoshiriki zinashughulikiwa kwa siri na heshima kamili.</p>
+            </div>
+          </div>
+        </div>
+        <div class="faq-item" id="faq-item-3">
+          <h3 class="faq-heading">
+            <button type="button" class="faq-q" id="faq-btn-3" aria-expanded="false" aria-controls="faq-panel-3">
+              <span>Ninawezaje kuweka miadi?</span>
+              <span class="faq-chevron" aria-hidden="true"></span>
+            </button>
+          </h3>
+          <div class="faq-panel" id="faq-panel-3" role="region" aria-labelledby="faq-btn-3">
+            <div class="faq-panel-inner">
+              <p>Bofya kitufe cha &ldquo;Weka Miadi Sasa&rdquo; kwenye fomu, au tuma ujumbe kupitia WhatsApp +255 783 040 837 na tutakujibu haraka.</p>
+            </div>
+          </div>
+        </div>
+        <div class="faq-item" id="faq-item-4">
+          <h3 class="faq-heading">
+            <button type="button" class="faq-q" id="faq-btn-4" aria-expanded="false" aria-controls="faq-panel-4">
+              <span>Mafunzo ya kabla ya ndoa yanahusu nini?</span>
+              <span class="faq-chevron" aria-hidden="true"></span>
+            </button>
+          </h3>
+          <div class="faq-panel" id="faq-panel-4" role="region" aria-labelledby="faq-btn-4">
+            <div class="faq-panel-inner">
+              <p>Maandalizi ya kina kwa wachumba: haki na wajibu wa wanandoa, matarajio ya maisha ya ndoa, na jinsi ya kuanza safari ya pamoja kwa misingi imara ya Kiislamu.</p>
+            </div>
+          </div>
+        </div>
+        <div class="faq-item" id="faq-item-5">
+          <h3 class="faq-heading">
+            <button type="button" class="faq-q" id="faq-btn-5" aria-expanded="false" aria-controls="faq-panel-5">
+              <span>Ninaweza kupata msaada wa dharura nje ya masaa ya kazi?</span>
+              <span class="faq-chevron" aria-hidden="true"></span>
+            </button>
+          </h3>
+          <div class="faq-panel" id="faq-panel-5" role="region" aria-labelledby="faq-btn-5">
+            <div class="faq-panel-inner">
+              <p>Kwa dharura, tuma ujumbe wa WhatsApp na tutajibu haraka iwezekanavyo, hata nje ya masaa ya kazi.</p>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -495,6 +549,11 @@
           <span class="cal-legend"><span class="cal-swatch cal-swatch--booked"></span>Imejaa</span>
           <span class="cal-legend"><span class="cal-swatch cal-swatch--closed"></span>Tumefungwa</span>
         </div>
+
+        <p class="cal-urgent">
+          Ukiwa na dharura, wasiliana
+          <a href="https://wa.me/255783040837?text=Assalamu%20Alaykum%2C%20nina%20dharura%20na%20ningehitaji%20msaada." target="_blank" rel="noopener">WhatsApp moja kwa moja &rarr;</a>
+        </p>
 
         <p id="calendar-selected" class="mt-4 text-sm font-semibold text-gold-200 hidden"></p>
       </div>
@@ -618,6 +677,18 @@
 <button type="button" id="back-to-top" class="back-to-top" aria-label="Rudi juu ya ukurasa">
   <svg viewBox="0 0 24 24" class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7" stroke-linecap="round" stroke-linejoin="round"/></svg>
 </button>
+
+<!-- Sticky mobile action bar (invisible on sm+ screens) -->
+<nav class="mobile-action-bar" aria-label="Wasiliana nasi moja kwa moja">
+  <a href="tel:+255783040837" class="mab-btn mab-call">
+    <svg viewBox="0 0 24 24" class="mab-icon" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M6.6 10.8c1.4 2.8 3.8 5.2 6.6 6.6l2.2-2.2c.3-.3.7-.4 1.1-.2 1.2.4 2.4.6 3.7.6.6 0 1 .5 1 1V20c0 .6-.5 1-1 1C11 21 3 13 3 4.1c0-.6.4-1.1 1-1.1h3.4c.6 0 1 .4 1 1 0 1.3.2 2.6.6 3.7.1.4 0 .8-.2 1.1L6.6 10.8Z"/></svg>
+    Piga Simu
+  </a>
+  <a href="https://wa.me/255783040837?text=Assalamu%20Alaykum%2C%20ningependa%20kuweka%20miadi%20na%20Sheikh%20Abuu%20Atwiyyah." target="_blank" rel="noopener" class="mab-btn mab-wa">
+    <svg viewBox="0 0 24 24" class="mab-icon" fill="currentColor" aria-hidden="true"><path d="M17.6 6.3A8.9 8.9 0 0 0 3.2 16.7L2 21l4.4-1.2a8.9 8.9 0 0 0 12.9-8A8.8 8.8 0 0 0 17.6 6.3ZM11 19.4a7.4 7.4 0 0 1-3.8-1l-.3-.2-2.6.7.7-2.5-.2-.3A7.4 7.4 0 1 1 18.4 12 7.4 7.4 0 0 1 11 19.4Z"/></svg>
+    WhatsApp
+  </a>
+</nav>
 
 <script src="js/config.js"></script>
 <script src="js/script.js"></script>
