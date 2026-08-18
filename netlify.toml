@@ -1,5 +1,6 @@
 [build]
   publish = "."
+  functions = "netlify/functions"
 
 [[headers]]
   for = "/*"
@@ -36,6 +37,22 @@
   [headers.values]
     Cache-Control = "no-cache"
     Content-Security-Policy = "default-src * data: blob: 'unsafe-inline' 'unsafe-eval'"
+
+[[headers]]
+  for = "/callback"
+  [headers.values]
+    Cache-Control = "no-cache"
+    Content-Security-Policy = "default-src * data: blob: 'unsafe-inline' 'unsafe-eval'"
+
+[[redirects]]
+  from = "/auth"
+  to = "/.netlify/functions/auth"
+  status = 200
+
+[[redirects]]
+  from = "/callback"
+  to = "/.netlify/functions/callback"
+  status = 200
 
 [[redirects]]
   from = "/*"

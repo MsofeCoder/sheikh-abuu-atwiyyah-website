@@ -5,7 +5,7 @@
   var CONFIG = {
     WHATSAPP_NUMBER: "255783040837",
     PHONE_DISPLAY: "+255 783 040 837",
-    BASE_URL: "https://sheikhatwiyyah.netlify.app/",
+    BASE_URL: "https://abuuatwiyyah.netlify.app/",
   };
 
   for (var key in CONFIG) {
