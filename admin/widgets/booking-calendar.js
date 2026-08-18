@@ -3,11 +3,11 @@
 
   var DAY_LABELS = ["P", "J2", "J3", "J4", "J5", "Ij", "J1"];
   var DAY_FULL = [
-    "Jumapili", "Jumatatu", "Jumanne", "Jumatano", "Alhamisi", "Ijumaa", "Jumamosi",
+    "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday",
   ];
   var MONTH_NAMES = [
-    "Januari", "Februari", "Machi", "Aprili", "Mei", "Juni",
-    "Julai", "Agosti", "Septemba", "Oktoba", "Novemba", "Desemba",
+    "January", "February", "March", "April", "May", "June",
+    "July", "August", "September", "October", "November", "December",
   ];
   var STYLE_ID = "bcal-widget-style";
 
@@ -152,8 +152,8 @@
           return;
         }
         var note = window.prompt(
-          "Kumbukumbu ya siku hii (hiari):",
-          "Kikao cha faragha"
+          "Note for this day (optional):",
+          "Private session"
         );
         if (note === null || note === undefined) return; // cancelled
         this.props.onChange(applyToggle(booked, iso, note));
@@ -191,13 +191,13 @@
           var title = iso;
           if (isBooked) {
             cls += " bcal-cell--booked";
-            title = "Imejaa: " + (bookedMap[iso] || "Imejaa") + " — bofya kufungua";
+            title = "Booked: " + (bookedMap[iso] || "Booked") + " — click to unlock";
           } else if (isPast) {
             cls += " bcal-cell--past";
-            title = iso + " (tarehe imepita) — bofya kuweka alama";
+            title = iso + " (past date) — click to mark booked";
           } else {
             cls += " bcal-cell--available";
-            title = iso + " — bofya kuweka alama ya imejaa";
+            title = iso + " — click to mark as booked";
           }
           if (isToday) cls += " bcal-cell--today";
 
@@ -228,13 +228,13 @@
             { className: "bcal-header" },
             h(
               "button",
-              { type: "button", className: "bcal-nav", "aria-label": "Mwezi uliopita", onClick: function () { self.shiftMonth(-1); } },
+              { type: "button", className: "bcal-nav", "aria-label": "Previous month", onClick: function () { self.shiftMonth(-1); } },
               "\u2039"
             ),
             h("div", { className: "bcal-title" }, MONTH_NAMES[month] + " " + year),
             h(
               "button",
-              { type: "button", className: "bcal-nav", "aria-label": "Mwezi ujao", onClick: function () { self.shiftMonth(1); } },
+              { type: "button", className: "bcal-nav", "aria-label": "Next month", onClick: function () { self.shiftMonth(1); } },
               "\u203A"
             )
           ),
@@ -252,8 +252,8 @@
           h(
             "div",
             { className: "bcal-hint" },
-            "Bofya siku isiyo na alama kuweka alama ya imejaa (kufuli); bofya tena kufungua. " +
-              "Tarehe zilizopita zinaweza kurekebishwa (siku hizo tu zimezuiwa kwa wageni)."
+            "Click an unbooked day to mark it booked (lock); click again to unlock. " +
+              "Past dates can still be edited (only visitors are blocked from those days)."
           )
         );
       },
@@ -265,7 +265,7 @@
           return a.date < b.date ? -1 : a.date > b.date ? 1 : 0;
         });
         if (!booked.length) {
-          return h("div", { className: "bcal-preview" }, "Hakuna tarehe zilizojazwa.");
+          return h("div", { className: "bcal-preview" }, "No booked dates.");
         }
         return h(
           "ul",

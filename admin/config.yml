@@ -15,157 +15,157 @@ locale: "en"
 collections:
 
   - name: "testimonials"
-    label: "Ushuhuda (Testimonials)"
+    label: "Testimonials"
     files:
       - file: "content/testimonials.json"
-        label: "Orodha ya Ushuhuda"
+        label: "Testimonials List"
         name: "testimonials"
         fields:
-          - label: "Ushuhuda"
+          - label: "Testimonials"
             name: "items"
             widget: "list"
             summary: "{{fields.name}} — {{fields.location}}"
             fields:
-              - { label: "Nukuu", name: "quote", widget: "text" }
-              - { label: "Jina la Mteja", name: "name", widget: "string" }
-              - { label: "Mahali", name: "location", widget: "string" }
+              - { label: "Quote", name: "quote", widget: "text" }
+              - { label: "Client Name", name: "name", widget: "string" }
+              - { label: "Location", name: "location", widget: "string" }
 
   - name: "resources"
-    label: "Rasilimali (Vitabu, Makala, Audio/Video)"
+    label: "Resources (Books, Articles, Audio/Video)"
     files:
       - file: "content/resources.json"
-        label: "Orodha ya Rasilimali"
+        label: "Resources List"
         name: "resources"
         fields:
-          - label: "Rasilimali"
+          - label: "Resources"
             name: "items"
             widget: "list"
             summary: "{{fields.type}} — {{fields.title}}"
             fields:
-              - label: "Aina"
+              - label: "Type"
                 name: "type"
                 widget: "select"
                 options:
-                  - { label: "Kitabu cha PDF", value: "pdf" }
-                  - { label: "Makala", value: "makala" }
+                  - { label: "PDF Book", value: "pdf" }
+                  - { label: "Article", value: "makala" }
                   - { label: "Audio", value: "audio" }
                   - { label: "Video", value: "video" }
-              - { label: "Kichwa", name: "title", widget: "string" }
-              - { label: "Maelezo Mafupi", name: "description", widget: "text" }
-              - label: "Faili la PDF au Kiungo cha Audio/Video (hiari)"
+              - { label: "Title", name: "title", widget: "string" }
+              - { label: "Short Description", name: "description", widget: "text" }
+              - label: "PDF File or Audio/Video Link (optional)"
                 name: "url"
                 widget: "file"
                 required: false
-                hint: "Ukijaza faili, kitufe kitafungua/pakua rasilimali moja kwa moja kwenye kivinjari (PDF kitapakuliwa). Ukiacha wazi, kitufe kitaomba nakala kupitia WhatsApp badala yake. Weka PDF za vitabu katika assets/books/."
+                hint: "If you add a file, the button will open/download the resource directly in the browser (PDFs will download). If left empty, the button will request a copy via WhatsApp instead. Place book PDFs in assets/books/."
 
   - name: "posters"
-    label: "Mabango (Posters)"
+    label: "Posters"
     files:
       - file: "content/posters.json"
-        label: "Orodha ya Mabango"
+        label: "Posters List"
         name: "posters"
         fields:
-          - label: "Mabango"
+          - label: "Posters"
             name: "items"
             widget: "list"
             summary: "{{fields.caption}}"
             fields:
-              - { label: "Picha ya Bango (kwa ukubwa kamili)", name: "image", widget: "image" }
-              - { label: "Picha ya Kidogo/Thumbnail ya WebP (hiari)", name: "thumb", widget: "image", required: false }
-              - { label: "Maelezo/Kichwa", name: "caption", widget: "string" }
+              - { label: "Poster Image (full size)", name: "image", widget: "image" }
+              - { label: "Small/WebP Thumbnail (optional)", name: "thumb", widget: "image", required: false }
+              - { label: "Description/Caption", name: "caption", widget: "string" }
 
   - name: "bookings"
-    label: "Kalenda ya Miadi (Booking Calendar)"
+    label: "Booking Calendar"
     files:
       - file: "content/bookings.json"
-        label: "Tarehe Zilizojaa"
+        label: "Booked Dates"
         name: "bookings"
         fields:
-          - label: "Tarehe Zilizojaa (zitaonyesha alama ya kufuli)"
+          - label: "Booked Dates (will show a lock icon)"
             name: "booked"
             widget: "booking-calendar"
 
   - name: "settings"
-    label: "Mipangilio ya Tovuti (Masaa ya Kazi)"
+    label: "Site Settings (Working Hours)"
     files:
       - file: "content/settings.json"
-        label: "Masaa ya Kazi"
+        label: "Working Hours"
         name: "settings"
         fields:
-          - label: "Masaa ya Kazi"
+          - label: "Working Hours"
             name: "hours"
             widget: "list"
             summary: "{{fields.day}} — {{fields.time}}"
             fields:
-              - { label: "Siku", name: "day", widget: "string" }
-              - { label: "Muda", name: "time", widget: "string" }
-              - { label: "Maelezo (hiari)", name: "note", widget: "string", required: false }
-          - label: "Siku za Wiki Zilizofungwa"
+              - { label: "Day", name: "day", widget: "string" }
+              - { label: "Time", name: "time", widget: "string" }
+              - { label: "Note (optional)", name: "note", widget: "string", required: false }
+          - label: "Weekly Closed Days"
             name: "weeklyOff"
             widget: "select"
             multiple: true
-            hint: "Siku hizi hazitaweza kubofywa kwenye kalenda ya miadi."
+            hint: "These days cannot be clicked on the booking calendar."
             options:
-              - { label: "Jumapili", value: 0 }
-              - { label: "Jumatatu", value: 1 }
-              - { label: "Jumanne", value: 2 }
-              - { label: "Jumatano", value: 3 }
-              - { label: "Alhamisi", value: 4 }
-              - { label: "Ijumaa", value: 5 }
-              - { label: "Jumamosi", value: 6 }
-          - label: "Muda wa Vikao (Time slots)"
+              - { label: "Sunday", value: 0 }
+              - { label: "Monday", value: 1 }
+              - { label: "Tuesday", value: 2 }
+              - { label: "Wednesday", value: 3 }
+              - { label: "Thursday", value: 4 }
+              - { label: "Friday", value: 5 }
+              - { label: "Saturday", value: 6 }
+          - label: "Session Times (Time Slots)"
             name: "slots"
             widget: "list"
-            hint: "Muda huu unaonyeshwa kwenye fomu ya miadi baada ya kuchagua tarehe. Kila kipengele ni muda mmoja, mfano: 9:00 – 10:00"
-          - label: "Muda wa Vikao kwa Siku Maalum (hiari)"
+            hint: "These times are shown on the booking form after a date is chosen. Each item is a single slot, e.g. 9:00 – 10:00"
+          - label: "Session Times for Specific Days (optional)"
             name: "slotByDay"
             widget: "list"
             required: false
-            summary: "Siku {{fields.weekday}} — vipindi {{fields.slots.length}}"
-            hint: "Muda tofauti kwa siku fulani za wiki. Huu muda unaonekana kwenye fomu baada ya kuchagua tarehe ya siku hiyo. Hakuna kipengele kwa siku → muda wa kawaida (slots) unatumika."
+            summary: "Day {{fields.weekday}} — {{fields.slots.length}} slots"
+            hint: "Different times for certain days of the week. This schedule appears on the form after choosing that day's date. No entry for a day → the default schedule (slots) is used."
             fields:
-              - label: "Siku ya Wiki (0=Jumapili ... 6=Jumamosi)"
+              - label: "Day of Week (0=Sunday ... 6=Saturday)"
                 name: "weekday"
                 widget: "select"
                 options:
-                  - { label: "Jumapili (0)", value: 0 }
-                  - { label: "Jumatatu (1)", value: 1 }
-                  - { label: "Jumanne (2)", value: 2 }
-                  - { label: "Jumatano (3)", value: 3 }
-                  - { label: "Alhamisi (4)", value: 4 }
-                  - { label: "Ijumaa (5)", value: 5 }
-                  - { label: "Jumamosi (6)", value: 6 }
-              - label: "Vipindi vya Muda"
+                  - { label: "Sunday (0)", value: 0 }
+                  - { label: "Monday (1)", value: 1 }
+                  - { label: "Tuesday (2)", value: 2 }
+                  - { label: "Wednesday (3)", value: 3 }
+                  - { label: "Thursday (4)", value: 4 }
+                  - { label: "Friday (5)", value: 5 }
+                  - { label: "Saturday (6)", value: 6 }
+              - label: "Time Slots"
                 name: "slots"
                 widget: "list"
-                hint: "Kila kipengele ni muda mmoja, mfano: 9:00 – 10:00"
-          - label: "Muda wa Vikao kwa Tarehe Maalum (hiari)"
+                hint: "Each item is a single slot, e.g. 9:00 – 10:00"
+          - label: "Session Times for Specific Dates (optional)"
             name: "dateSlots"
             widget: "list"
             required: false
             summary: "{{fields.date}}"
-            hint: "Muda tofauti kwa tarehe maalum (mfano sherehe au siku ya pekee). Huu muda unatangulia kuliko muda wa siku (slotByDay)."
+            hint: "Different times for specific dates (e.g. an event or special day). This schedule takes precedence over the per-day schedule (slotByDay)."
             fields:
-              - label: "Tarehe (YYYY-MM-DD)"
+              - label: "Date (YYYY-MM-DD)"
                 name: "date"
                 widget: "datetime"
                 date_format: "YYYY-MM-DD"
                 time_format: false
                 format: "YYYY-MM-DD"
-              - label: "Vipindi vya Muda"
+              - label: "Time Slots"
                 name: "slots"
                 widget: "list"
-                hint: "Kila kipengele ni muda mmoja, mfano: 9:00 – 10:00"
-          - label: "Picha ya Sheikh"
+                hint: "Each item is a single slot, e.g. 9:00 – 10:00"
+          - label: "Sheikh's Photo"
             name: "photo"
             widget: "image"
             required: false
-            hint: "Weka picha halisi ya Sheikh (SVG/WebP/PNG). Ukiacha wazi, picha ya mfano (muundo wa kijiometri) itatumika."
-          - label: "Takwimu za Uaminifu (credentials)"
+            hint: "Upload the Sheikh's actual photo (SVG/WebP/PNG). If left empty, a placeholder image (geometric design) will be used."
+          - label: "Credentials/Stats"
             name: "credentials"
             widget: "list"
             summary: "{{fields.value}} — {{fields.label}}"
             fields:
-              - { label: "Thamani (mfano: 15+)", name: "value", widget: "string" }
-              - { label: "Maelezo (mfano: Miaka ya uzoefu)", name: "label", widget: "string" }
-          - { label: "Kumbukumbu", name: "note", widget: "text", required: false }
+              - { label: "Value (e.g. 15+)", name: "value", widget: "string" }
+              - { label: "Description (e.g. Years of experience)", name: "label", widget: "string" }
+          - { label: "Note", name: "note", widget: "text", required: false }
