@@ -83,16 +83,7 @@ collections:
         fields:
           - label: "Tarehe Zilizojaa (zitaonyesha alama ya kufuli)"
             name: "booked"
-            widget: "list"
-            summary: "{{fields.date}}"
-            fields:
-              - label: "Tarehe"
-                name: "date"
-                widget: "datetime"
-                date_format: "YYYY-MM-DD"
-                time_format: false
-                format: "YYYY-MM-DD"
-              - { label: "Kumbukumbu (hiari)", name: "note", widget: "string", required: false }
+            widget: "booking-calendar"
 
   - name: "settings"
     label: "Mipangilio ya Tovuti (Masaa ya Kazi)"
