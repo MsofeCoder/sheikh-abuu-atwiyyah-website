@@ -1,6 +1,9 @@
 backend:
-  name: git-gateway
+  name: github
+  repo: MsofeCoder/sheikh-abuu-atwiyyah-website
   branch: main
+  base_url: https://abuuatwiyyah.netlify.app
+  auth_endpoint: auth
 
 # Where uploaded images/PDFs are stored in the repo, and the public
 # path used to reference them on the live site.
