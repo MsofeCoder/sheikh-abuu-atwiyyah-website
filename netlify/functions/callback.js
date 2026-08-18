@@ -1,26 +1,23 @@
 const https = require("https");
 const querystring = require("querystring");
 
-exports.handler = function (event, context, callback) {
+exports.handler = async (event, context) => {
   if (event.httpMethod !== "GET") {
-    return callback(null, { statusCode: 405, body: "Method Not Allowed" });
+    return { statusCode: 405, body: "Method Not Allowed" };
   }
 
   const code = event.queryStringParameters && event.queryStringParameters.code;
   if (!code) {
-    return callback(null, {
-      statusCode: 400,
-      body: "Missing code query parameter",
-    });
+    return { statusCode: 400, body: "Missing code query parameter" };
   }
 
   const clientId = process.env.OAUTH_CLIENT_ID;
   const clientSecret = process.env.OAUTH_CLIENT_SECRET;
   if (!clientId || !clientSecret) {
-    return callback(null, {
+    return {
       statusCode: 500,
       body: "OAuth client credentials are not configured",
-    });
+    };
   }
 
   const postBody = querystring.stringify({
@@ -41,71 +38,67 @@ exports.handler = function (event, context, callback) {
     },
   };
 
-  const req = https.request(options, function (res) {
-    let data = "";
-    res.setEncoding("utf8");
-    res.on("data", function (chunk) {
-      data += chunk;
-    });
-    res.on("end", function () {
-      let token;
-      try {
-        token = JSON.parse(data).access_token;
-      } catch (e) {
-        return callback(null, {
-          statusCode: 500,
-          body: "Failed to parse token response",
+  let data;
+  try {
+    data = await new Promise(function (resolve, reject) {
+      const req = https.request(options, function (res) {
+        let resBody = "";
+        res.setEncoding("utf8");
+        res.on("data", function (chunk) {
+          resBody += chunk;
         });
-      }
-      if (!token) {
-        return callback(null, {
-          statusCode: 500,
-          body: "No access_token in response",
+        res.on("end", function () {
+          resolve(resBody);
         });
-      }
-
-      const safeToken = token.replace(/\\/g, "\\\\").replace(/"/g, '\\"');
-      const page =
-        "<!DOCTYPE html>\n" +
-        "<html>\n" +
-        "<head><title>Authorization</title></head>\n" +
-        "<body>\n" +
-        "<script>\n" +
-        "  (function() {\n" +
-        "    function receiveMessage(e) {\n" +
-        "      window.opener.postMessage(\n" +
-        "        'authorization:github:success:' + JSON.stringify({ token: \"" +
-        safeToken +
-        '", provider: "github" }),\n' +
-        "        e.origin\n" +
-        "      );\n" +
-        "      window.removeEventListener(\"message\", receiveMessage, false);\n" +
-        "    }\n" +
-        "    window.addEventListener(\"message\", receiveMessage, false);\n" +
-        '    window.opener.postMessage("authorizing:github", "*");\n' +
-        "  })();\n" +
-        "</script>\n" +
-        "</body>\n" +
-        "</html>";
-
-      return callback(null, {
-        statusCode: 200,
-        headers: {
-          "Content-Type": "text/html; charset=utf-8",
-          "Cache-Control": "no-cache",
-        },
-        body: page,
       });
+      req.on("error", reject);
+      req.write(postBody);
+      req.end();
     });
-  });
+  } catch (e) {
+    return { statusCode: 500, body: "Token exchange request failed" };
+  }
 
-  req.on("error", function (e) {
-    return callback(null, {
-      statusCode: 500,
-      body: "Token exchange request failed",
-    });
-  });
+  let token;
+  try {
+    token = JSON.parse(data).access_token;
+  } catch (e) {
+    return { statusCode: 500, body: "Failed to parse token response" };
+  }
+  if (!token) {
+    return { statusCode: 500, body: "No access_token in response" };
+  }
 
-  req.write(postBody);
-  req.end();
+  const safeToken = token.replace(/\\/g, "\\\\").replace(/"/g, '\\"');
+  const page =
+    "<!DOCTYPE html>\n" +
+    "<html>\n" +
+    "<head><title>Authorization</title></head>\n" +
+    "<body>\n" +
+    "<script>\n" +
+    "  (function() {\n" +
+    "    function receiveMessage(e) {\n" +
+    "      window.opener.postMessage(\n" +
+    "        'authorization:github:success:' + JSON.stringify({ token: \"" +
+    safeToken +
+    '", provider: "github" }),\n' +
+    "        e.origin\n" +
+    "      );\n" +
+    "      window.removeEventListener(\"message\", receiveMessage, false);\n" +
+    "    }\n" +
+    "    window.addEventListener(\"message\", receiveMessage, false);\n" +
+    '    window.opener.postMessage("authorizing:github", "*");\n' +
+    "  })();\n" +
+    "</script>\n" +
+    "</body>\n" +
+    "</html>";
+
+  return {
+    statusCode: 200,
+    headers: {
+      "Content-Type": "text/html; charset=utf-8",
+      "Cache-Control": "no-cache",
+    },
+    body: page,
+  };
 };

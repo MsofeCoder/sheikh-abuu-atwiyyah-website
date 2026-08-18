@@ -1,17 +1,14 @@
 const https = require("https");
 const querystring = require("querystring");
 
-exports.handler = function (event, context, callback) {
+exports.handler = async (event, context) => {
   if (event.httpMethod !== "GET") {
-    return callback(null, { statusCode: 405, body: "Method Not Allowed" });
+    return { statusCode: 405, body: "Method Not Allowed" };
   }
 
   const clientId = process.env.OAUTH_CLIENT_ID;
   if (!clientId) {
-    return callback(null, {
-      statusCode: 500,
-      body: "OAUTH_CLIENT_ID is not configured",
-    });
+    return { statusCode: 500, body: "OAUTH_CLIENT_ID is not configured" };
   }
 
   const params = querystring.stringify({
@@ -20,12 +17,12 @@ exports.handler = function (event, context, callback) {
     redirect_uri: "https://abuuatwiyyah.netlify.app/callback",
   });
 
-  return callback(null, {
+  return {
     statusCode: 302,
     headers: {
       Location: "https://github.com/login/oauth/authorize?" + params,
       "Cache-Control": "no-cache",
     },
     body: "",
-  });
+  };
 };
