@@ -1,18 +1,28 @@
 {
   "items": [
     {
-      "image": "assets/posters/poster-1.jpg",
+      "image": "assets/posters/poster-1.png",
       "thumb": "assets/posters/poster-1.webp",
       "caption": "Je, Unajiandaa Kuingia Katika Ndoa?"
-    },
-    {
-      "image": "/assets/uploads/full-logo.png",
-      "caption": "KARIBU SANA SHEIKH  ABUU ATWIYYAH  ISLAMIC ADVISORY"
     },
     {
       "image": "assets/posters/poster-2.png",
       "thumb": "assets/posters/poster-2.webp",
       "caption": "Je, Unajiandaa Kuingia Katika Ndoa?"
+    },
+    {
+      "image": "assets/posters/poster-3.png",
+      "thumb": "assets/posters/poster-3.webp",
+      "caption": "Je, Unajiandaa Kuingia Katika Ndoa?"
+    },
+    {
+      "image": "assets/posters/poster-4.png",
+      "thumb": "assets/posters/poster-4.webp",
+      "caption": "Je, Unajiandaa Kuingia Katika Ndoa?"
+    },
+    {
+      "image": "/assets/uploads/full-logo.png",
+      "caption": "KARIBU SANA SHEIKH  ABUU ATWIYYAH  ISLAMIC ADVISORY"
     }
   ]
 }
