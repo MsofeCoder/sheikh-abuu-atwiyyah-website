@@ -94,11 +94,25 @@
   }
 
   /* ---------------- Posters ---------------- */
+  function posterCardMarkup(p) {
+    var src = (p.thumb && String(p.thumb).trim()) ? p.thumb : p.image;
+    var caption = p.caption || "Bango";
+    return (
+      '<a href="' + escapeHtml(p.image) + '" target="_blank" rel="noopener" class="poster-card reveal in-view">' +
+      '<img src="' + escapeHtml(src) + '" alt="' + escapeHtml(caption) + '" loading="lazy" decoding="async" width="720">' +
+      '<span class="poster-caption">' + escapeHtml(caption) + "</span>" +
+      "</a>"
+    );
+  }
+
   function layoutPosters(grid, count) {
+    if (count >= 3) {
+      grid.className = "mt-14 poster-marquee-viewport";
+      return;
+    }
     var cls = "mt-14 grid gap-6";
     if (count === 1) cls += " poster-grid--single";
-    else if (count === 2) cls += " poster-grid--two";
-    else cls += " sm:grid-cols-2 lg:grid-cols-4";
+    else cls += " poster-grid--two";
     grid.className = cls;
   }
 
@@ -106,19 +120,18 @@
     var grid = document.getElementById("poster-grid");
     if (!grid || !items || !items.length) return;
 
-    grid.innerHTML = items
-      .map(function (p) {
-        var src = (p.thumb && String(p.thumb).trim()) ? p.thumb : p.image;
-        var caption = p.caption || "Bango";
-        return (
-          '<a href="' + escapeHtml(p.image) + '" target="_blank" rel="noopener" class="poster-card reveal in-view">' +
-          '<img src="' + escapeHtml(src) + '" alt="' + escapeHtml(caption) + '" loading="lazy" decoding="async" width="720">' +
-          '<span class="poster-caption">' + escapeHtml(caption) + "</span>" +
-          "</a>"
-        );
-      })
-      .join("");
+    if (items.length >= 3) {
+      var set = items.map(posterCardMarkup).join("");
+      grid.innerHTML =
+        '<div class="poster-marquee-track">' +
+        '<div class="poster-marquee-set">' + set + "</div>" +
+        '<div class="poster-marquee-set" aria-hidden="true">' + set + "</div>" +
+        "</div>";
+      layoutPosters(grid, items.length);
+      return;
+    }
 
+    grid.innerHTML = items.map(posterCardMarkup).join("");
     layoutPosters(grid, items.length);
   }
 
