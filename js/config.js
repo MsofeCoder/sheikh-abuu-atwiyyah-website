@@ -3,8 +3,9 @@
   window.SAA = window.SAA || {};
 
   var CONFIG = {
-    WHATSAPP_NUMBER: "255783040837",
-    PHONE_DISPLAY: "+255 783 040 837",
+    WHATSAPP_NUMBER: "255679155676",
+    PHONE_DISPLAY: "+255 679 155 676",
+    EMAIL: "sheikhabuuatwiyyah@gmail.com",
     BASE_URL: "https://abuuatwiyyah.netlify.app/",
   };
 

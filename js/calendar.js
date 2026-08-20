@@ -158,10 +158,12 @@
         : isPast
         ? "Tarehe imepita"
         : "Inapatikana — bofya kuchagua";
+      var statusLabel = isBooked ? "Imejaa" : isClosed ? "Tumefungwa" : isPast ? "Tarehe imepita" : "Inapatikana";
+      var ariaLabel = MONTH_NAMES[state.month] + " " + d + ", " + statusLabel;
 
       cells.push(
         '<button type="button" class="' + cls.join(" ") + '" data-date="' + iso + '" ' +
-        (disabled ? "disabled" : "") + ' title="' + title + '" aria-label="' + iso + " — " + title + '">' +
+        (disabled ? "disabled" : "") + ' title="' + title + '" aria-label="' + ariaLabel + '">' +
         '<span class="cal-daynum">' + d + "</span>" +
         icon +
         "</button>"

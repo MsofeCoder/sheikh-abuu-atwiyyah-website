@@ -2,7 +2,7 @@
   "use strict";
 
   window.SAA = window.SAA || {};
-  var WHATSAPP_NUMBER = (window.SAA && window.SAA.WHATSAPP_NUMBER) || "255783040837";
+  var WHATSAPP_NUMBER = (window.SAA && window.SAA.WHATSAPP_NUMBER) || "255679155676";
 
   var prefersReducedMotion =
     window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -346,8 +346,16 @@
       var text = encodeURIComponent(lines.join("\n"));
       var url = "https://wa.me/" + WHATSAPP_NUMBER + "?text=" + text;
 
+      var formData = new FormData(form);
+      formData.append("form-name", "booking");
+      fetch(window.location.pathname, {
+        method: "POST",
+        body: formData,
+        headers: { Accept: "application/x-www-form-urlencoded, text/plain, */*" }
+      }).catch(function () {});
+
       window.open(url, "_blank", "noopener");
-      showToast("Unaelekezwa kwenye WhatsApp...");
+      showToast("Ujumbe unatumwa kwa barua pepe na WhatsApp ya Sheikh...");
     });
   }
 

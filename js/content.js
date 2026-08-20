@@ -1,7 +1,7 @@
 (function () {
   "use strict";
 
-  var WHATSAPP_NUMBER = (window.SAA && window.SAA.WHATSAPP_NUMBER) || "255783040837";
+  var WHATSAPP_NUMBER = (window.SAA && window.SAA.WHATSAPP_NUMBER) || "255679155676";
 
   function waLink(text) {
     return "https://wa.me/" + WHATSAPP_NUMBER + "?text=" + encodeURIComponent(text);
@@ -95,12 +95,18 @@
 
   /* ---------------- Posters ---------------- */
   function posterCardMarkup(p) {
-    var src = (p.thumb && String(p.thumb).trim()) ? p.thumb : p.image;
     var caption = p.caption || "Bango";
+    var image = (p.image && String(p.image).trim()) ? p.image : "";
+    var thumb = (p.thumb && String(p.thumb).trim()) ? p.thumb : "";
+    var href = image || thumb;
+    var img = '<img src="' + escapeHtml(href) + '" alt="' + escapeHtml(caption) + '" loading="lazy" decoding="async" width="1024" height="1536">';
+    if (thumb && /\.webp$/i.test(thumb)) {
+      img = '<source srcset="' + escapeHtml(thumb) + '" type="image/webp">' + img;
+    }
     return (
-      '<a href="' + escapeHtml(p.image) + '" target="_blank" rel="noopener" class="poster-card reveal in-view">' +
-      '<img src="' + escapeHtml(src) + '" alt="' + escapeHtml(caption) + '" loading="lazy" decoding="async" width="720">' +
-      '<span class="poster-caption">' + escapeHtml(caption) + "</span>" +
+      '<a href="' + escapeHtml(href) + '" target="_blank" rel="noopener" class="poster-card reveal in-view">' +
+      "<picture>" + img + "</picture>" +
+      '<h3 class="poster-caption">' + escapeHtml(caption) + "</h3>" +
       "</a>"
     );
   }

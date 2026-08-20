@@ -11,3 +11,4 @@
 @keyframes marquee-scroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 @media (prefers-reduced-motion:reduce){.poster-marquee-viewport{overflow-x:auto}.poster-marquee-track{animation:none}.poster-marquee-set:last-child{display:none}}
 @media (max-width:639px){.poster-marquee-set .poster-card{width:220px}}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border-width:0}
